@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">lab06</string>
 
-    <string name="menuLeft">Swipe</string>
+    <string name="menuLeft">Images</string>
     <string name="menuRight">List</string>
     <string name="menuMain">Main</string>
 
@@ -34,4 +34,10 @@
     <string name="Ghoul">Ghoul</string>
     <string name="cancel">Cancel</string>
     <string name="edit">Edit</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="addPhoto">Add photo</string>
+    <string name="mainDataSetting">Edit main data</string>
+    <string name="startFragment">Start fragment</string>
 </resources>

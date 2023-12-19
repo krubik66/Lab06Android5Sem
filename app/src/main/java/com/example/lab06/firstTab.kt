@@ -67,7 +67,7 @@ class firstTab : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        data = requireActivity().getSharedPreferences("L4_preferences", Context.MODE_PRIVATE)
+        data = requireActivity().getSharedPreferences("L6_preferences", Context.MODE_PRIVATE)
         topText.setText(data.getString("beforeImage", "I am on the top!"))
         bottomText1.setText(data.getString("afterImage1", "edit"))
         bottomText2.setText(data.getString("afterImage2", "me!"))

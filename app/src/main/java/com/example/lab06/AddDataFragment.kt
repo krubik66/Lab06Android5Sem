@@ -10,7 +10,7 @@ import android.widget.EditText
 import android.widget.RadioGroup
 import android.widget.RatingBar
 import androidx.core.os.bundleOf
-import com.example.lab05.databinding.FragmentAddDataBinding
+import com.example.lab06.databinding.FragmentAddDataBinding
 
 
 // TODO: Rename parameter arguments, choose names that match

@@ -18,8 +18,8 @@
             android:id="@+id/secondFragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:icon="@drawable/leftmenuicon_foreground"
-            android:title="@string/menuLeft"
+            android:icon="@drawable/orcicon"
+            android:title="@string/mainDataSetting"
 
             app:showAsAction="ifRoom" />
         <item
@@ -28,6 +28,16 @@
             android:layout_height="wrap_content"
             android:icon="@drawable/rightmenuicon_foreground"
             android:title="@string/menuRight"
+
+            app:showAsAction="ifRoom" />
+
+
+        <item
+            android:id="@+id/startFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/theme1icon"
+            android:title="@string/startFragment"
 
             app:showAsAction="ifRoom" />
     </group>

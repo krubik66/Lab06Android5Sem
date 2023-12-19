@@ -54,7 +54,7 @@ class FirstFragment : Fragment() {
     }
 
     fun applyData(){
-        val data: SharedPreferences = requireActivity().getSharedPreferences("L4_preferences", Context.MODE_PRIVATE)
+        val data: SharedPreferences = requireActivity().getSharedPreferences("L6_preferences", Context.MODE_PRIVATE)
         beforeImage.text = data.getString("beforeImage", "I am on the top!")
         afterImage1.text = data.getString("afterImage1", "afterImage1")
         afterImage2.text = data.getString("afterImage2", "afterImage2")
