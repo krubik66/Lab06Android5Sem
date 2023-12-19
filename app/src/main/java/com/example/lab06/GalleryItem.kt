@@ -14,4 +14,8 @@ class GalleryItem {
         this.path = path
         this.curi = curi
     }
+
+    override fun equals(other: Any?): Boolean {
+        return super.equals(other)
+    }
 }
