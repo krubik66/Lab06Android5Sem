@@ -79,10 +79,21 @@
         <action
             android:id="@+id/action_galleryImagesFragment_to_gallerySwipeFragment"
             app:destination="@id/gallerySwipeFragment" />
+        <action
+            android:id="@+id/action_galleryImagesFragment_to_addImageFragment"
+            app:destination="@id/addImageFragment" />
     </fragment>
     <fragment
         android:id="@+id/gallerySwipeFragment"
         android:name="com.example.lab06.GallerySwipeFragment"
         android:label="fragment_gallery_swipe"
-        tools:layout="@layout/fragment_gallery_swipe" />
+        tools:layout="@layout/fragment_gallery_swipe" >
+        <action
+            android:id="@+id/action_gallerySwipeFragment_to_firstFragment"
+            app:destination="@id/firstFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addImageFragment"
+        android:name="com.example.lab06.AddImageFragment"
+        android:label="AddImageFragment" />
 </navigation>

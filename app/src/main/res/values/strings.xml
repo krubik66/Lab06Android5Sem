@@ -40,4 +40,5 @@
     <string name="addPhoto">Add photo</string>
     <string name="mainDataSetting">Edit main data</string>
     <string name="startFragment">Start fragment</string>
+    <string name="previewCamera">Preview</string>
 </resources>

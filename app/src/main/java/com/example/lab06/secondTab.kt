@@ -66,6 +66,7 @@ class secondTab : Fragment() {
             "page 3" -> editor.putInt("imageNumber", 3)
             else -> editor.putInt("imageNumber", 4)
         }
+        editor.putBoolean("now", false)
         editor.apply()
     }
 

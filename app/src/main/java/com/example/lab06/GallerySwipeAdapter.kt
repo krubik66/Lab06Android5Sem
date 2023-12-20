@@ -6,10 +6,12 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import kotlin.coroutines.coroutineContext
 
-class GallerySwipeAdapter(fa: FragmentActivity, context: Context): FragmentStateAdapter(fa) {
+class GallerySwipeAdapter(fa: FragmentActivity, context: Context, startPos: Int): FragmentStateAdapter(fa) {
+
     companion object {
         var PAGE_COUNT = Int.MAX_VALUE // Replace this with the actual number of tabs/pages
     }
+
 
     val imageList: MutableList<GalleryItem> = ImageRepo.getInstance(context).getSharedList()!!
 

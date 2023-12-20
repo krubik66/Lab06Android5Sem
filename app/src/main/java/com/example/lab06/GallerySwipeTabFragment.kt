@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.navigation.fragment.findNavController
 import com.example.lab06.databinding.FragmentGallerySwipeTabBinding
 import java.io.FileNotFoundException
 import java.io.InputStream
@@ -36,6 +37,16 @@ class GallerySwipeTabFragment : Fragment() {
         val binding = FragmentGallerySwipeTabBinding.inflate(inflater, container, false)
 
         image = binding.imageInSwipeView
+        binding.buttonSaveInGallerySwipe.setOnClickListener {
+            val data = requireActivity().getSharedPreferences("additional", Context.MODE_PRIVATE)
+            val editor = data.edit()
+
+            editor.putString("uri", oferredUri.toString())
+            editor.putBoolean("new", true)
+
+            editor.apply()
+            findNavController().navigate(R.id.action_gallerySwipeFragment_to_firstFragment)
+        }
         loadImgFromCuri(oferredUri, image)
         return binding.root
     }

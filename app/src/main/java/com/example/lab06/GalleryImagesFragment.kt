@@ -16,6 +16,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.cardview.widget.CardView
+import androidx.core.os.bundleOf
 import androidx.core.view.drawToBitmap
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
@@ -84,7 +85,7 @@ class GalleryImagesFragment : Fragment() {
     }
 
     fun openCamera() {
-
+        findNavController().navigate(R.id.action_galleryImagesFragment_to_addImageFragment)
     }
 
     private val DiffCallback = object : DiffUtil.ItemCallback<GalleryItem>() {
@@ -120,6 +121,11 @@ class GalleryImagesFragment : Fragment() {
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
             var currData = galleryList[position]
             holder.itemView.setOnClickListener {
+                parentFragmentManager.setFragmentResult(
+                    "msgtoimg", bundleOf(
+                        "position" to position
+                    )
+                )
                 findNavController().navigate(R.id.action_galleryImagesFragment_to_gallerySwipeFragment)
             }
             if(Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {

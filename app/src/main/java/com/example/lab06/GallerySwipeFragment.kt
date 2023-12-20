@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.viewpager2.widget.ViewPager2
 
 class GallerySwipeFragment : Fragment() {
+    lateinit var viewPager: ViewPager2
+    var position: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,13 +23,23 @@ class GallerySwipeFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_gallery_swipe, container, false)
 
-        val vpAdapter = GallerySwipeAdapter(requireActivity(), requireContext())
+        val vpAdapter = GallerySwipeAdapter(requireActivity(), requireContext(), position)
 
-        val viewPager = view.findViewById<ViewPager2>(R.id.gallerySwipePager)
+        viewPager = view.findViewById<ViewPager2>(R.id.gallerySwipePager)
         viewPager.adapter = vpAdapter
+        viewPager.currentItem = position
 
         return view
     }
 
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        parentFragmentManager.setFragmentResultListener("msgtoimg", viewLifecycleOwner){
+                _, bundle ->
+            run {
+                position = bundle.getInt("position")
+            }
+            viewPager.currentItem = position
+        }
+    }
 }
