@@ -93,6 +93,14 @@ class ImageRepo {
         return appStoreList?.asReversed()
     }
 
+    fun getCurrentList(): MutableList<GalleryItem> {
+        when(photo_storage) {
+            SHARED_S -> return sharedStoreList!!.asReversed()
+            PRIVATE_S -> return appStoreList!!.asReversed()
+        }
+        return sharedStoreList!!
+    }
+
     companion object {
         private var INSTANCE: ImageRepo? = null
         private lateinit var ctx: Context

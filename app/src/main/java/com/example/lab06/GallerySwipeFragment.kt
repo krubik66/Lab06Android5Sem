@@ -23,7 +23,7 @@ class GallerySwipeFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_gallery_swipe, container, false)
 
-        val vpAdapter = GallerySwipeAdapter(requireActivity(), requireContext(), position)
+        val vpAdapter = GallerySwipeAdapter(requireActivity(), requireContext())
 
         viewPager = view.findViewById<ViewPager2>(R.id.gallerySwipePager)
         viewPager.adapter = vpAdapter
