@@ -15,6 +15,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.core.os.bundleOf
 import androidx.core.view.drawToBitmap
@@ -73,10 +74,12 @@ class GalleryImagesFragment : Fragment() {
             imageRepo.SHARED_S -> imageList = imageRepo.getSharedList()!!
             imageRepo.PRIVATE_S -> imageList = imageRepo.getAppList()!!
         }
-
+//        Toast.makeText(requireContext(), imageList[0].name, Toast.LENGTH_LONG).show()
 
         adapter = PhotoListAdapter(requireContext(), imageList)
         recView.adapter = adapter
+//        Toast.makeText(requireContext(), adapter.itemCount, Toast.LENGTH_LONG).show()
+        adapter.notifyDataSetChanged()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

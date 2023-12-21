@@ -6,6 +6,7 @@ import android.content.Context
 import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
+import android.widget.Toast
 import androidx.core.content.FileProvider
 import java.io.File
 
@@ -14,7 +15,7 @@ class ImageRepo {
 
     val SHARED_S = 1
     val PRIVATE_S = 2
-    var photo_storage = SHARED_S
+    var photo_storage = PRIVATE_S
 
     fun setStorage(storage: Int): Boolean {
         if(storage != SHARED_S && storage != PRIVATE_S) {
@@ -69,7 +70,7 @@ class ImageRepo {
     }
 
     fun getAppList(): MutableList<GalleryItem>? {
-        val dir: File? = ctx.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val dir: File? = ctx.getExternalFilesDir("${Environment.DIRECTORY_PICTURES}/ForApp/")
         dir?.listFiles()
         appStoreList?.clear()
         if(dir?.isDirectory == true) {
@@ -83,10 +84,12 @@ class ImageRepo {
                             "${ctx.packageName}.provider", value)
                         appStoreList?.add(GalleryItem(filename, value.toURI().path,
                             value.absolutePath, tempUri))
+//                        Toast.makeText(ctx, filename, Toast.LENGTH_LONG).show()
                     }
                 }
             }
         }
+//        Toast.makeText(ctx, appStoreList!![0].name, Toast.LENGTH_LONG).show()
         return appStoreList?.asReversed()
     }
 

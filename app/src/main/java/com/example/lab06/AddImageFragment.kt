@@ -30,14 +30,15 @@ class AddImageFragment : Fragment() {
     private lateinit var lastFileUri: Uri
 
     val photoPreviewLauncher =
-        registerForActivityResult(ActivityResultContracts.TakePicturePreview()) {
-                result: Bitmap? ->
-            if (result != null) {
-                Toast.makeText(requireContext(),"PREVIEW RECEIVED", Toast.LENGTH_LONG).show()
-                _binding.imageViewA.setImageBitmap(result)
+        registerForActivityResult(ActivityResultContracts.TakePicture()) {
+                result: Boolean ->
+            if (result) {
+                Toast.makeText(requireContext(),"Saved in App Storage", Toast.LENGTH_LONG).show()
+//                _binding.imageViewA.setImageBitmap(result)
+                saveImageToAppStorage()
             }
             else {
-                Toast.makeText(requireContext(),"PREVIEW NOT RECEIVED", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(),"Not saved", Toast.LENGTH_LONG).show()
             }
         }
 
@@ -82,6 +83,35 @@ class AddImageFragment : Fragment() {
         }
     }
 
+    private fun saveImageToAppStorage() {
+        if (Environment.MEDIA_MOUNTED == Environment.getExternalStorageState()) {
+            val externalStorageDir = requireContext().getExternalFilesDir("${Environment.DIRECTORY_PICTURES}/ForApp")
+
+            val newFile = File(externalStorageDir, lastFile.name)
+//            Toast.makeText(requireContext(), lastFile.name, Toast.LENGTH_LONG).show()
+            var fis: FileInputStream? = null
+            var fos: FileOutputStream? = null
+
+            try {
+                fis = FileInputStream(lastFile)
+                fos = FileOutputStream(newFile)
+
+                val buffer = ByteArray(1024)
+                var length: Int
+                while (fis.read(buffer).also { length = it } > 0) {
+                    fos.write(buffer, 0, length)
+                }
+            } catch (e: IOException) {
+                e.printStackTrace()
+            } finally {
+                fis?.close()
+                fos?.close()
+            }
+
+            lastFile.delete()
+        }
+    }
+
 
 
     override fun onCreateView(
@@ -90,8 +120,9 @@ class AddImageFragment : Fragment() {
     ): View {
         _binding = FragmentAddImageBinding.inflate(inflater, container, false)
         _binding.previewButton.setOnClickListener {
+            lastFileUri = getNewFileUri()
             try {
-                photoPreviewLauncher.launch()
+                photoPreviewLauncher.launch(lastFileUri)
             } catch (e: ActivityNotFoundException) {
                 Toast.makeText(requireContext(),"PREVIEW DOESN'T WORK!", Toast.LENGTH_LONG).show()
             }
