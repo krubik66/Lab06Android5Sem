@@ -38,10 +38,19 @@ class GalleryImagesFragment : Fragment() {
 
     lateinit var imageRepo: ImageRepo
     lateinit var imageList: MutableList<GalleryItem>
+    lateinit var recView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        imageList = imageRepo.getSharedList()!!
+
+        adapter = PhotoListAdapter(requireContext(), imageList)
+        recView.adapter = adapter
     }
 
     override fun onCreateView(
@@ -51,7 +60,7 @@ class GalleryImagesFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentGalleryImagesBinding.inflate(inflater, container, false)
 
-        val recView = _binding.recyclerView
+        recView = _binding.recyclerView
         recView.layoutManager = GridLayoutManager(requireContext(), 2)
         imageRepo = ImageRepo.getInstance(requireContext())
         imageList = imageRepo.getSharedList()!!
@@ -135,6 +144,30 @@ class GalleryImagesFragment : Fragment() {
                 }
             }
             else holder.img.setImageBitmap(getBitmapFromUri(appContext, currData.curi))
+//            loadImageWithReducedQuality(appContext, currData.curi!!, holder.img)
+        }
+
+        fun loadImageWithReducedQuality(context: Context, uri: Uri, imageView: ImageView) {
+            val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
+
+            inputStream?.use {
+                // Decode the input stream into a Bitmap
+                val originalBitmap = BitmapFactory.decodeStream(it)
+
+                // Adjust the compression quality (0-100)
+                val compressionQuality = 60
+                val compressedBitmap = compressBitmap(originalBitmap, compressionQuality)
+
+                // Set the compressed Bitmap into the ImageView
+                imageView.setImageBitmap(compressedBitmap)
+            }
+        }
+
+        private fun compressBitmap(originalBitmap: Bitmap, quality: Int = 50): Bitmap {
+            val outputStream = java.io.ByteArrayOutputStream()
+            originalBitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream)
+            val compressedByteArray = outputStream.toByteArray()
+            return BitmapFactory.decodeByteArray(compressedByteArray, 0, compressedByteArray.size)
         }
 
         fun getBitmapFromUri(con: Context, uri: Uri?): Bitmap? {

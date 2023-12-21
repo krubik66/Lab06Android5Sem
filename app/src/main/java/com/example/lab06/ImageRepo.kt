@@ -11,9 +11,17 @@ class ImageRepo {
 
     fun getSharedList(): MutableList<GalleryItem>? {
         uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        val projection = arrayOf(
+            MediaStore.Images.Media._ID,
+            MediaStore.Images.Media.DISPLAY_NAME,
+            MediaStore.Images.Media.DATA
+        )
+        val selection = MediaStore.Images.Media.DATA + " like ? OR " + MediaStore.Images.Media.DATA + " like ?"
+//        val selectionArgs = arrayOf("%Pictures/ForApp/%", "%DCIM/Camera/%")
+        val selectionArgs = arrayOf("%Pictures/%")
         val contentResolver: ContentResolver = ctx.contentResolver
-        val cursor = contentResolver.query(uri, null, null,
-            null, null)
+        val cursor = contentResolver.query(uri, projection, selection,
+            selectionArgs, null)
         sharedStoreList?.clear()
 
         if(cursor == null) {
@@ -33,7 +41,7 @@ class ImageRepo {
                     "No path yet", thisContentUri)))
             } while (cursor.moveToNext())
         }
-        return sharedStoreList
+        return sharedStoreList?.asReversed()
     }
 
     fun getAppList(): MutableList<GalleryItem>? {
