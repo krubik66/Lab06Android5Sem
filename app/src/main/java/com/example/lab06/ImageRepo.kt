@@ -4,10 +4,34 @@ import android.content.ContentResolver
 import android.content.ContentUris
 import android.content.Context
 import android.net.Uri
+import android.os.Environment
 import android.provider.MediaStore
+import androidx.core.content.FileProvider
+import java.io.File
 
 class ImageRepo {
     lateinit var uri: Uri
+
+    val SHARED_S = 1
+    val PRIVATE_S = 2
+    var photo_storage = SHARED_S
+
+    fun setStorage(storage: Int): Boolean {
+        if(storage != SHARED_S && storage != PRIVATE_S) {
+            return false
+        }
+        else photo_storage = storage
+        return true
+    }
+
+    fun changeStorage() {
+        if(photo_storage == SHARED_S) photo_storage = PRIVATE_S
+        else photo_storage = SHARED_S
+    }
+
+    fun getStorage(): Int {
+        return photo_storage
+    }
 
     fun getSharedList(): MutableList<GalleryItem>? {
         uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
@@ -45,7 +69,25 @@ class ImageRepo {
     }
 
     fun getAppList(): MutableList<GalleryItem>? {
-        return appStoreList
+        val dir: File? = ctx.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        dir?.listFiles()
+        appStoreList?.clear()
+        if(dir?.isDirectory == true) {
+            var fileList = dir.listFiles()
+            if(fileList != null) {
+                for(value in fileList) {
+                    var filename = value.name
+                    if(filename.endsWith(".jpg") || filename.endsWith(".jpeg") ||
+                        filename.endsWith(".png") || filename.endsWith(".gif")) {
+                        val tempUri = FileProvider.getUriForFile(ctx,
+                            "${ctx.packageName}.provider", value)
+                        appStoreList?.add(GalleryItem(filename, value.toURI().path,
+                            value.absolutePath, tempUri))
+                    }
+                }
+            }
+        }
+        return appStoreList?.asReversed()
     }
 
     companion object {

@@ -47,10 +47,7 @@ class GalleryImagesFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        imageList = imageRepo.getSharedList()!!
-
-        adapter = PhotoListAdapter(requireContext(), imageList)
-        recView.adapter = adapter
+        setAdapter()
     }
 
     override fun onCreateView(
@@ -63,15 +60,23 @@ class GalleryImagesFragment : Fragment() {
         recView = _binding.recyclerView
         recView.layoutManager = GridLayoutManager(requireContext(), 2)
         imageRepo = ImageRepo.getInstance(requireContext())
-        imageList = imageRepo.getSharedList()!!
-
-        adapter = PhotoListAdapter(requireContext(), imageList)
-        recView.adapter = adapter
+        setAdapter()
         _binding.addPhotoButton.setOnClickListener {
             openCamera()
         }
 
         return _binding.root
+    }
+
+    fun setAdapter() {
+        when(imageRepo.getStorage()) {
+            imageRepo.SHARED_S -> imageList = imageRepo.getSharedList()!!
+            imageRepo.PRIVATE_S -> imageList = imageRepo.getAppList()!!
+        }
+
+
+        adapter = PhotoListAdapter(requireContext(), imageList)
+        recView.adapter = adapter
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -88,6 +93,10 @@ class GalleryImagesFragment : Fragment() {
         when (item.itemId){
             R.id.cameraButton -> {
                 openCamera()
+            }
+            R.id.dataButton -> {
+                imageRepo.changeStorage()
+                setAdapter()
             }
         }
         return super.onOptionsItemSelected(item)
