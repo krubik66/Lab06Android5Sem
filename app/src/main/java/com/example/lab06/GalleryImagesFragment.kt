@@ -15,18 +15,14 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
-import androidx.cardview.widget.CardView
+import android.widget.TextView
 import androidx.core.os.bundleOf
-import androidx.core.view.drawToBitmap
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lab06.databinding.FragmentGalleryImagesBinding
-import com.example.lab06.databinding.FragmentThirdBinding
 import com.example.lab06.databinding.GalleryItemBinding
 import java.io.FileNotFoundException
 import java.io.InputStream
@@ -125,6 +121,7 @@ class GalleryImagesFragment : Fragment() {
         inner class MyViewHolder(viewBinding: GalleryItemBinding) :
             RecyclerView.ViewHolder(viewBinding.root) {
             val img: ImageView = viewBinding.imageGalleryView
+            val textView: TextView = viewBinding.textViewForImage
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -149,6 +146,7 @@ class GalleryImagesFragment : Fragment() {
                 )
                 findNavController().navigate(R.id.action_galleryImagesFragment_to_gallerySwipeFragment)
             }
+            holder.textView.text = currData.name
             if(Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
                 currData.curi?.let {
                     holder.img.setImageBitmap(appContext.contentResolver.

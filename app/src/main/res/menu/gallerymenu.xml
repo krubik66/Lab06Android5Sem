@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:title="@string/addListMenu"
-        android:icon="@drawable/orcicon"
+        android:icon="@drawable/dataicon_foreground"
         android:id="@+id/dataButton"
         app:showAsAction="always"/>
 </menu>

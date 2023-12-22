@@ -41,8 +41,8 @@ class ImageRepo {
             MediaStore.Images.Media.DISPLAY_NAME,
             MediaStore.Images.Media.DATA
         )
-        val selection = MediaStore.Images.Media.DATA + " like ? OR " + MediaStore.Images.Media.DATA + " like ?"
-//        val selectionArgs = arrayOf("%Pictures/ForApp/%", "%DCIM/Camera/%")
+//        val selection = MediaStore.Images.Media.DATA + " like ? OR " + MediaStore.Images.Media.DATA + " like ?"
+        val selection = MediaStore.Images.Media.DATA + " like ? "
         val selectionArgs = arrayOf("%Pictures/%")
         val contentResolver: ContentResolver = ctx.contentResolver
         val cursor = contentResolver.query(uri, projection, selection,

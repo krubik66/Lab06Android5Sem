@@ -2,16 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_horizontal">
-
-<!--    <androidx.cardview.widget.CardView-->
-<!--        android:id="@+id/cardImage"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_weight="5"-->
-<!--        >-->
-
-<!--    </androidx.cardview.widget.CardView>-->
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/imageGalleryView"
@@ -20,4 +12,13 @@
         android:layout_margin="5dp"
         android:scaleType="fitXY"
         android:src="@drawable/dataicon_foreground" />
+
+    <TextView
+        android:id="@+id/textViewForImage"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="@string/app_name" />
+
+
 </LinearLayout>
